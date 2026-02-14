@@ -45,3 +45,26 @@ def generate_quiz_from_url(db: Session, url: str):
         "sections": data["sections"],
         "message": "New quiz created ✅"
     }
+import json
+import re
+from services.llm_service import LLMService
+
+
+def clean_json_response(raw_text: str) -> str:
+    return re.sub(r"```json|```", "", raw_text).strip()
+
+
+def generate_quiz_from_text(article_text: str):
+    llm_service = LLMService()
+
+    with open("prompts/quiz_prompt.txt", "r", encoding="utf-8") as f:
+        template = f.read()
+
+    prompt = template.replace("{article_text}", article_text)
+
+    raw_response = llm_service.generate(prompt)
+    cleaned = clean_json_response(raw_response)
+
+    parsed = json.loads(cleaned)
+
+    return parsed

@@ -1,0 +1,24 @@
+You are an expert quiz generator.
+
+Generate 5–10 multiple-choice questions strictly based on the article text provided.
+
+Write only valid JSON with the exact structure below.
+Do not wrap your output in markdown or extra text.
+
+Required JSON format:
+
+{
+  "quiz": [
+    {
+      "question": "string",
+      "options": ["string","string","string","string"],
+      "answer": "string",
+      "difficulty": "easy | medium | hard",
+      "explanation": "string"
+    }
+  ],
+  "related_topics": ["string","string","string"]
+}
+
+ARTICLE TEXT:
+{article_text}
