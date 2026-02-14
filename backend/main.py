@@ -1,13 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy import text
 from utils.validators import validate_wikipedia_url
 from services.scraper import scrape_wikipedia
-from database import engine
+from database import engine, get_db
 import models
-from models import Base
-from fastapi import Depends
+from models import Base, Quiz, Question, RelatedTopic
+from schemas import QuizHistoryResponse, QuizDetailResponse
+from typing import List
+
 from sqlalchemy.orm import Session
-from database import get_db
 from services.quiz_service import generate_quiz_from_url
 
 
@@ -49,4 +50,18 @@ def scrape(url: str):
 def generate(url: str, db: Session = Depends(get_db)):
     return generate_quiz_from_url(db, url)
 
+@app.get("/history", response_model=List[QuizHistoryResponse])
+def get_history(db: Session = Depends(get_db)):
+    quizzes = db.query(Quiz).order_by(Quiz.created_at.desc()).all()
+    return quizzes
+
+
+@app.get("/quiz/{quiz_id}", response_model=QuizDetailResponse)
+def get_quiz(quiz_id: int, db: Session = Depends(get_db)):
+    quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
+
+    if not quiz:
+        raise HTTPException(status_code=404, detail="Quiz not found")
+
+    return quiz
 
