@@ -161,10 +161,9 @@ UI Rendering
 
 ## 🧪 Sample Data
 
-Sample generated outputs are available in:
-sample_data/
+Sample generated outputs are available here:
 
-
+👉 [View Sample Data Folder](sample_data/)
 
 ---
 ## 📸 Application Screenshots
