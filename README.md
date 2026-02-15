@@ -178,10 +178,10 @@ sample_data/
 ![Generating](Screenshots/Generate%20Quiz/Generating%20Quiz.png)
 
 #### Question Screen
-![Question](Screenshots/Generate%20Quiz/Question.png)
+![Question](Screenshots/Generate%20Quiz/Question%20.png)
 
 #### Attempt
-![Attempt](Screenshots/Generate%20Quiz/Attempt.png)
+![Attempt](Screenshots/Generate%20Quiz/Attempt%20.png)
 
 #### Result Screen
 ![Result](Screenshots/Generate%20Quiz/Result.png)
@@ -194,10 +194,10 @@ sample_data/
 ![Quiz History](Screenshots/History%20Tab/Quiz%20History.png)
 
 #### Preview Modal
-![Preview](Screenshots/History%20Tab/Preview.png)
+![Preview](Screenshots/History%20Tab/Preview%20.png)
 
 #### Reattempt Flow
-![Reattempt](Screenshots/History%20Tab/Reattempt.png)
+![Reattempt](Screenshots/History%20Tab/Reattempt%20.png)
 
 ---
 
