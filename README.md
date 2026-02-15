@@ -167,6 +167,39 @@ sample_data/
 
 
 ---
+## 📸 Application Screenshots
+
+### 🧠 Generate Quiz Flow
+
+#### Initial Screen
+![Initial](Screenshots/Generate%20Quiz/Initial.png)
+
+#### Generating Quiz
+![Generating](Screenshots/Generate%20Quiz/Generating%20Quiz.png)
+
+#### Question Screen
+![Question](Screenshots/Generate%20Quiz/Question.png)
+
+#### Attempt
+![Attempt](Screenshots/Generate%20Quiz/Attempt.png)
+
+#### Result Screen
+![Result](Screenshots/Generate%20Quiz/Result.png)
+
+---
+
+### 📜 History Tab
+
+#### Quiz History
+![Quiz History](Screenshots/History%20Tab/Quiz%20History.png)
+
+#### Preview Modal
+![Preview](Screenshots/History%20Tab/Preview.png)
+
+#### Reattempt Flow
+![Reattempt](Screenshots/History%20Tab/Reattempt.png)
+
+---
 
 ## 🖥️ Running Locally
 
