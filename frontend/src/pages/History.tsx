@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import QuizModal from "../components/QuizModal";
+import type { QuizData } from "../types/quiz";
+import { normalizeQuizData } from "../utils/quizValidation";
+
+interface HistoryQuizRow {
+  id: number;
+  title: string;
+  created_at?: string;
+}
 
 export default function History() {
-  const [quizzes, setQuizzes] = useState<any[]>([]);
-  const [selectedQuiz, setSelectedQuiz] = useState<any>(null);
-  const [loadingPreview, setLoadingPreview] = useState(false);
+  const [quizzes, setQuizzes] = useState<HistoryQuizRow[]>([]);
+  const [selectedQuiz, setSelectedQuiz] = useState<QuizData | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [loadingQuizAction, setLoadingQuizAction] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,37 +31,31 @@ export default function History() {
     }
   };
 
-  const handlePreview = async (quizId: number) => {
+  const handleDetails = async (quizId: number) => {
     try {
-      setLoadingPreview(true);
+      setLoadingQuizAction(true);
       const res = await api.get(`/quiz/${quizId}`);
-      console.log("Preview Data:", res.data);
-      const safeQuiz = {
-        ...res.data,
-        title: res.data?.title ?? "Untitled Quiz",
-        summary: res.data?.summary ?? "",
-        questions: Array.isArray(res.data?.questions) ? res.data.questions : [],
-        related_topics: Array.isArray(res.data?.related_topics) ? res.data.related_topics : [],
-      };
+      const safeQuiz = normalizeQuizData(res.data);
+      if (!safeQuiz) {
+        throw new Error("Invalid quiz payload");
+      }
       setSelectedQuiz(safeQuiz);
+      setIsDetailsOpen(true);
     } catch (error) {
-      alert("Failed to load quiz preview");
+      alert("Failed to load quiz details");
     } finally {
-      setLoadingPreview(false);
+      setLoadingQuizAction(false);
     }
   };
 
   const handleReattempt = async (quizId: number) => {
     try {
-      setLoadingPreview(true);
+      setLoadingQuizAction(true);
       const res = await api.get(`/quiz/${quizId}`);
-      const safeQuiz = {
-        ...res.data,
-        title: res.data?.title ?? "Untitled Quiz",
-        summary: res.data?.summary ?? "",
-        questions: Array.isArray(res.data?.questions) ? res.data.questions : [],
-        related_topics: Array.isArray(res.data?.related_topics) ? res.data.related_topics : [],
-      };
+      const safeQuiz = normalizeQuizData(res.data);
+      if (!safeQuiz) {
+        throw new Error("Invalid quiz payload");
+      }
       navigate("/", {
         state: {
           quizPreview: safeQuiz,
@@ -59,71 +63,17 @@ export default function History() {
         },
       });
       setSelectedQuiz(null);
+      setIsDetailsOpen(false);
     } catch (error) {
       alert("Failed to start reattempt");
     } finally {
-      setLoadingPreview(false);
+      setLoadingQuizAction(false);
     }
   };
 
-  const handleStartQuiz = () => {
-    if (!selectedQuiz?.id) return;
-    handleReattempt(selectedQuiz.id);
-  };
-
-  const renderPreviewModal = () => {
-    if (!selectedQuiz) return null;
-
-    return (
-      <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-        onClick={() => setSelectedQuiz(null)}
-      >
-        <div
-          className="bg-slate-800 w-full max-w-3xl rounded-xl p-5 sm:p-6 md:p-8 shadow-2xl relative border border-slate-700"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button
-            onClick={() => setSelectedQuiz(null)}
-            className="absolute top-4 right-4 text-slate-400 hover:text-white"
-          >
-            ✕
-          </button>
-
-          <h2 className="text-2xl font-bold mb-4">
-            {selectedQuiz.title}
-          </h2>
-
-          <p className="text-slate-300 mb-6">
-            {selectedQuiz.summary || "No summary available."}
-          </p>
-
-          <div className="text-sm text-slate-400 mb-4">
-            {selectedQuiz.questions?.length ?? 0} Questions
-          </div>
-
-          {selectedQuiz.related_topics?.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-6">
-              {selectedQuiz.related_topics.map((topic: string, i: number) => (
-                <span
-                  key={i}
-                  className="px-3 py-1 bg-slate-700 rounded-full text-sm text-blue-400"
-                >
-                  {topic}
-                </span>
-              ))}
-            </div>
-          )}
-
-          <button
-            onClick={handleStartQuiz}
-            className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-medium transition"
-          >
-            Start Quiz
-          </button>
-        </div>
-      </div>
-    );
+  const closeDetailsModal = () => {
+    setIsDetailsOpen(false);
+    setSelectedQuiz(null);
   };
 
   return (
@@ -152,21 +102,23 @@ export default function History() {
                     </td>
                     <td className="px-4 py-5">
                       <p className="text-sm text-slate-400">
-                        {new Date(quiz.created_at).toLocaleDateString()}
+                        {quiz.created_at
+                          ? new Date(quiz.created_at).toLocaleDateString()
+                          : "N/A"}
                       </p>
                     </td>
                     <td className="px-4 py-5">
                       <div className="flex justify-end gap-3">
                         <button
-                          onClick={() => handlePreview(quiz.id)}
-                          disabled={loadingPreview}
+                          onClick={() => handleDetails(quiz.id)}
+                          disabled={loadingQuizAction}
                           className="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          Preview
+                          Details
                         </button>
                         <button
                           onClick={() => handleReattempt(quiz.id)}
-                          disabled={loadingPreview}
+                          disabled={loadingQuizAction}
                           className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition disabled:opacity-60 disabled:cursor-not-allowed"
                         >
                           Reattempt
@@ -181,7 +133,11 @@ export default function History() {
         </div>
       </div>
 
-      {renderPreviewModal()}
+      <QuizModal
+        quiz={selectedQuiz}
+        isOpen={isDetailsOpen}
+        onClose={closeDetailsModal}
+      />
     </>
   );
 }
