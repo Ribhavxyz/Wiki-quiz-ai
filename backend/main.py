@@ -27,12 +27,14 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://wiki-quiz-edskitbfb-ry3.vercel.app"
+        "https://wiki-quiz-ai-ry3.vercel.app",
+        "https://wiki-quiz-edskitbfb-ry3.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 
