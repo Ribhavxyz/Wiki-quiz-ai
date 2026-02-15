@@ -62,3 +62,7 @@ class QuizDetailResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class QuizGenerateRequest(BaseModel):
+    url: str

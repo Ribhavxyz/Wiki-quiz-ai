@@ -20,13 +20,17 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
-
-
-
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # your frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 Base.metadata.create_all(bind=engine)
@@ -80,9 +84,12 @@ def validate_llm_output(parsed: dict):
         if q["difficulty"] not in ["easy", "medium", "hard"]:
             raise HTTPException(status_code=500, detail="Invalid difficulty value.")
 
-@app.post("/generate", response_model=QuizGenerateResponse)
+from schemas import QuizGenerateRequest
 
-def generate_quiz(url: str, db: Session = Depends(get_db)):
+@app.post("/generate", response_model=QuizGenerateResponse)
+def generate_quiz(request: QuizGenerateRequest, db: Session = Depends(get_db)):
+    
+    url = request.url
 
     # 1️⃣ Validate URL
     if not validate_wikipedia_url(url):
