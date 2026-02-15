@@ -162,7 +162,7 @@ sample_data/
 
 
 
---
+---
 
 ## 🖥️ Running Locally
 
@@ -182,3 +182,14 @@ uvicorn main:app --reload
 cd frontend
 npm install
 npm run dev
+
+---
+
+### Deployment Links
+
+- Backend: https://wiki-quiz-ai.onrender.com
+
+- Frontend: https://wiki-quiz-ai-ry3.vercel.app/
+
+---
+
