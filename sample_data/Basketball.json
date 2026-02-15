@@ -1,0 +1,111 @@
+{
+  "id": 5,
+  "url": "https://en.wikipedia.org/wiki/Basketball",
+  "title": "Basketball",
+  "summary": "Basketball is a team sport in which two teams of five players each (excluding subs), opposing one another on a rectangular court, compete with the primary objective of shooting a basketball (approximately 9.4 inches (24 cm) in diameter) through the defender's hoop (a basket 18 inches (46 cm) in diameter mounted 10 feet (3.05 m) high to a backboard at each end of the court). Teams alternate between offense, when they attempt to score, and defense, when they try to prevent the opposing side from scoring. A field goal is worth two points, unless made from behind the three-point line, when it is worth three. After a foul, timed play stops and the player fouled or designated to shoot a technical foul is given one, two or three one-point free throws. The team with the most points at the end of the game wins, but if regulation play expires with the score tied, an additional period of play (overtime) is mandated. However, if the additional period still results in a tied score, yet another addi...",
+  "quiz": [
+    {
+      "question": "Who is credited with inventing basketball in 1891?",
+      "options": [
+        "Senda Berenson",
+        "James Naismith",
+        "Michael Jordan",
+        "FIBA"
+      ],
+      "answer": "James Naismith",
+      "difficulty": "easy",
+      "explanation": "The article states: 'Invented in 1891 by Canadian-American gym teacher James Naismith in Springfield, Massachusetts'."
+    },
+    {
+      "question": "What is the approximate diameter of a basketball, as mentioned in the article?",
+      "options": [
+        "18 inches",
+        "10 feet",
+        "9.4 inches",
+        "46 cm"
+      ],
+      "answer": "9.4 inches",
+      "difficulty": "easy",
+      "explanation": "The text specifies a basketball is 'approximately 9.4 inches (24 cm) in diameter'."
+    },
+    {
+      "question": "What was the initial issue with the peach baskets used when basketball was first invented?",
+      "options": [
+        "They were too fragile and broke easily.",
+        "The ball had to be retrieved manually after each score.",
+        "They were mounted too low for effective play.",
+        "Players found them too small to shoot into."
+      ],
+      "answer": "The ball had to be retrieved manually after each score.",
+      "difficulty": "medium",
+      "explanation": "Naismith initially set up the peach basket with its bottom intact, which meant that the ball had to be retrieved manually after each 'basket' or point scored."
+    },
+    {
+      "question": "How many points is a field goal worth if it is made from behind the three-point line?",
+      "options": [
+        "One point",
+        "Two points",
+        "Three points",
+        "Four points"
+      ],
+      "answer": "Three points",
+      "difficulty": "easy",
+      "explanation": "The article states: 'A field goal is worth two points, unless made from behind the three-point line, when it is worth three.'"
+    },
+    {
+      "question": "Which two playing positions are typically filled by the shortest players or the best ball handlers?",
+      "options": [
+        "Center and Power Forward",
+        "Small Forward and Center",
+        "Shooting Guard and Point Guard",
+        "Power Forward and Shooting Guard"
+      ],
+      "answer": "Shooting Guard and Point Guard",
+      "difficulty": "medium",
+      "explanation": "The text describes: 'the shortest players or the best ball handlers are the shooting guard and the point guard'."
+    },
+    {
+      "question": "According to the article, which of the following is explicitly considered a violation in basketball?",
+      "options": [
+        "Passing the ball to a teammate",
+        "Bouncing the ball while running",
+        "Collecting a rebound",
+        "Holding the ball with both hands then resuming dribbling"
+      ],
+      "answer": "Holding the ball with both hands then resuming dribbling",
+      "difficulty": "hard",
+      "explanation": "The article lists violations: 'It is a violation to lift or drag one's pivot foot without dribbling the ball, to carry it, or to hold the ball with both hands then resume dribbling.'"
+    },
+    {
+      "question": "What happens if regulation play expires with a tied score in basketball?",
+      "options": [
+        "The game ends in a draw.",
+        "The team with fewer fouls wins.",
+        "An additional period of play (overtime) is mandated.",
+        "A penalty shootout determines the winner."
+      ],
+      "answer": "An additional period of play (overtime) is mandated.",
+      "difficulty": "medium",
+      "explanation": "The text states: 'if regulation play expires with the score tied, an additional period of play (overtime) is mandated.'"
+    },
+    {
+      "question": "Which organization is described as the most significant professional basketball league in the world in terms of popularity, salaries, talent, and level of competition?",
+      "options": [
+        "EuroLeague",
+        "FIBA Basketball World Cup",
+        "National Basketball Association (NBA)",
+        "WNBA"
+      ],
+      "answer": "National Basketball Association (NBA)",
+      "difficulty": "easy",
+      "explanation": "The article identifies: 'The National Basketball Association (NBA) is the most significant professional basketball league in the world in terms of popularity, salaries, talent, and level of competition'."
+    }
+  ],
+  "related_topics": [
+    "James Naismith",
+    "National Basketball Association",
+    "FIBA",
+    "Team Sport",
+    "Springfield, Massachusetts"
+  ]
+}

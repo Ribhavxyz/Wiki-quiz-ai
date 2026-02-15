@@ -1,0 +1,111 @@
+{
+  "id": 6,
+  "url": "https://en.wikipedia.org/wiki/Royal_Mint",
+  "title": "Royal Mint",
+  "summary": "The Royal Mint is the United Kingdom's official maker of British coins. It is currently located in Llantrisant, Wales, where it moved in 1968.",
+  "quiz": [
+    {
+      "question": "Where is The Royal Mint currently located?",
+      "options": [
+        "Tower of London",
+        "Royal Mint Court",
+        "Llantrisant, Wales",
+        "Aberystwyth Castle"
+      ],
+      "answer": "Llantrisant, Wales",
+      "difficulty": "easy",
+      "explanation": "The article states, 'It is currently located in Llantrisant, Wales, where it moved in 1968.'"
+    },
+    {
+      "question": "What is the ownership structure and primary contractual obligation of The Royal Mint?",
+      "options": [
+        "It is a private company with a contract to supply international markets.",
+        "It is wholly owned by His Majesty's Treasury and has an exclusive contract to supply the nation's coinage.",
+        "It is a limited company owned by a consortium of banks, supplying precious metal products.",
+        "It is a government agency that manages historic coins and luxury collectibles."
+      ],
+      "answer": "It is wholly owned by His Majesty's Treasury and has an exclusive contract to supply the nation's coinage.",
+      "difficulty": "medium",
+      "explanation": "The article states, 'it is a limited company that is wholly owned by His Majesty's Treasury and is under an exclusive contract to supply the nation's coinage.'"
+    },
+    {
+      "question": "Where did The Royal Mint operate for several hundred years before moving to Royal Mint Court?",
+      "options": [
+        "Llantrisant, Wales",
+        "Aberystwyth Castle",
+        "The Tower of London",
+        "Marseille"
+      ],
+      "answer": "The Tower of London",
+      "difficulty": "easy",
+      "explanation": "The article mentions, 'The Royal Mint operated within the Tower of London for several hundred years before moving to what is now called Royal Mint Court.'"
+    },
+    {
+      "question": "What was a primary cause and effect of The Great Debasement enacted by Henry VIII in the 1540s?",
+      "options": [
+        "It was caused by an economic expansion in mainland Europe, leading to increased coin production.",
+        "It was enacted to strengthen control of the country's currency by dissolving monasteries.",
+        "It was a result of wars with France and Scotland, which led to a significant reduction of precious metal in coins.",
+        "It was a measure to unify the currencies of England and Scotland under King James I."
+      ],
+      "answer": "It was a result of wars with France and Scotland, which led to a significant reduction of precious metal in coins.",
+      "difficulty": "medium",
+      "explanation": "The article states, 'By the 1540s, wars with France and Scotland led Henry VIII to enact The Great Debasement, which saw the amount of precious metal in coins significantly reduced.'"
+    },
+    {
+      "question": "Based on the article, what can be inferred about the Royal Mint's initial approach to copper coinage and its eventual resolution?",
+      "options": [
+        "The Royal Mint prioritized copper coinage from the outset, leading to the immediate closure of all unlicensed mints.",
+        "The Royal Mint initially outsourced copper coinage production to avoid diverting resources from more profitable metals, eventually taking over production itself.",
+        "The Royal Mint was unaware of the widespread production of unofficial tokens until 1672, when it established its own copper mint.",
+        "The Royal Mint actively encouraged private licenses for copper farthings to compete with gold and silver coins."
+      ],
+      "answer": "The Royal Mint initially outsourced copper coinage production to avoid diverting resources from more profitable metals, eventually taking over production itself.",
+      "difficulty": "hard",
+      "explanation": "The article explains that the Royal Mint 'not wanting to divert manpower from minting more profitable gold and silver coins, hired outside agent Lord Harington who, under license, started issuing copper farthings in 1613,' and later, 'In 1672, the Royal Mint finally took over the production of copper coinage.'"
+    },
+    {
+      "question": "Which method did Kentish tribes like the Cantii use to imitate coins from Marseille around 80–60 BC?",
+      "options": [
+        "Hammering",
+        "Striking",
+        "Casting",
+        "Engraving"
+      ],
+      "answer": "Casting",
+      "difficulty": "easy",
+      "explanation": "The article states that Kentish tribes 'imitated those of Marseille through casting instead of hammering.'"
+    },
+    {
+      "question": "What strategic business change has The Royal Mint undertaken since 2018, and what is a recent initiative related to this change?",
+      "options": [
+        "It has focused solely on circulating coins for international markets and closed its precious metal products division.",
+        "It has expanded into precious metals investment and luxury collectibles, and is building a plant to recover precious metals from electronic waste.",
+        "It has returned to its historic location in the Tower of London to produce limited edition commemorative coins.",
+        "It has reduced its workforce and scaled back operations due to declining cash use."
+      ],
+      "answer": "It has expanded into precious metals investment and luxury collectibles, and is building a plant to recover precious metals from electronic waste.",
+      "difficulty": "medium",
+      "explanation": "The article states, 'Since 2018 The Royal Mint has been evolving its business to help offset declining cash use. It has expanded into precious metals investment, historic coins, and luxury collectibles,' and 'In 2022 The Royal Mint announced it was building a new plant in South Wales to recover precious metals from electronic waste.'"
+    },
+    {
+      "question": "How did the centralization of minting in Britain evolve from the 13th to the 16th century, according to the text?",
+      "options": [
+        "Centralization began in 1279 with the Tower of London mint, but major coin production outside London continued until the 16th century.",
+        "The Tower of London mint became the sole producer of coins in 1279, with no other mints operating thereafter.",
+        "Centralization was complete by 1279, with the dissolution of monasteries being an unrelated event.",
+        "The 13th century saw a reduction of mints outside London, and the 16th century saw the effective end of major coin production outside London through the dissolution of monasteries."
+      ],
+      "answer": "The 13th century saw a reduction of mints outside London, and the 16th century saw the effective end of major coin production outside London through the dissolution of monasteries.",
+      "difficulty": "hard",
+      "explanation": "The article states that in 1279, mints were unified and control centralized to the Tower of London, with 'only a few local and episcopal mints continuing to operate.' Later, in the early 16th century, the dissolution of monasteries 'effectively ended major coin production outside London,' indicating a further step in centralization."
+    }
+  ],
+  "related_topics": [
+    "Numismatics",
+    "Coinage of the United Kingdom",
+    "Decimalisation",
+    "Precious metals",
+    "Electronic waste recycling"
+  ]
+}

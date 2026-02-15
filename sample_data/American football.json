@@ -1,0 +1,98 @@
+{
+  "id": 4,
+  "url": "https://en.wikipedia.org/wiki/American_football",
+  "title": "American football",
+  "summary": "American football, referred to simply as football in the United States and Canada and also known as gridiron football,[nb 1] is a team sport played by two teams of eleven players on a rectangular field with goalposts at each end. The offense, the team with possession of the oval-shaped football, attempts to advance down the field by running with the ball or throwing it, while the defense, the team without possession of the ball, aims to stop the offense's advance and to take control of the ball for themselves. The offense must advance the ball at least ten yards in four downs or plays; if they fail, they turn over the football to the defense. If they succeed, they are given a new set of four downs to continue the drive. Points are scored primarily by advancing the ball into the opposing team's end zone for a touchdown or kicking the ball through the opponent's goalposts for a field goal. The team with the most points at the end of the game wins. In the case of a tie after four quarters...",
+  "quiz": [
+    {
+      "question": "In the United States and Canada, American football is simply referred to as what?",
+      "options": [
+        "Gridiron",
+        "Rugby",
+        "Football",
+        "American Game"
+      ],
+      "answer": "Football",
+      "difficulty": "easy",
+      "explanation": "The article states: 'American football, referred to simply as football in the United States and Canada'."
+    },
+    {
+      "question": "Who is recognized as the 'Father of American Football' for drawing up a set of rule changes from 1880 onward?",
+      "options": [
+        "Walter Camp",
+        "James Naismith",
+        "William Webb Ellis",
+        "Amos Alonzo Stagg"
+      ],
+      "answer": "Walter Camp",
+      "difficulty": "easy",
+      "explanation": "The text identifies 'Walter Camp, the Father of American Football', as drawing up rule changes from 1880 onward."
+    },
+    {
+      "question": "What was the score of the first American football game played on November 6, 1869, between Rutgers and Princeton?",
+      "options": [
+        "6–4, with Rutgers winning",
+        "4–6, with Princeton winning",
+        "0–0, a tie game",
+        "10–7, with Rutgers winning"
+      ],
+      "answer": "6–4, with Rutgers winning",
+      "difficulty": "medium",
+      "explanation": "The article states: 'What is considered to be the first American football game was played on November 6, 1869, between Rutgers and Princeton... Rutgers won the game 6–4.'"
+    },
+    {
+      "question": "Which of the following concepts were established by Walter Camp's rule changes from 1880 onward?",
+      "options": [
+        "The forward pass and the neutral zone",
+        "The snap, the line of scrimmage, and eleven-player teams",
+        "The round ball and 25 players per team",
+        "Overtime rules and field goal scoring"
+      ],
+      "answer": "The snap, the line of scrimmage, and eleven-player teams",
+      "difficulty": "medium",
+      "explanation": "The text notes that Walter Camp 'established concepts that would define the sport, among them the snap, the line of scrimmage, eleven-player teams, and the concept of downs.'"
+    },
+    {
+      "question": "What was a significant difference in the rules of the first American football game compared to the rugby-style game Harvard preferred after playing McGill University?",
+      "options": [
+        "The first game used an oblong ball, while Harvard preferred a round ball.",
+        "The first game allowed running with the ball, while Harvard preferred only kicking.",
+        "The first game had 25 players per team and used a round ball that could not be carried, while Harvard preferred 11 men and an oblong ball that could be run.",
+        "The first game featured the forward pass, while Harvard's preferred game did not."
+      ],
+      "answer": "The first game had 25 players per team and used a round ball that could not be carried, while Harvard preferred 11 men and an oblong ball that could be run.",
+      "difficulty": "hard",
+      "explanation": "The first game 'consisted of 25 players per team and used a round ball that could not be picked up or carried.' Harvard preferred 'having only 11 men on the field, running the ball... and using an oblong instead of a round ball.'"
+    },
+    {
+      "question": "When was the term 'football' officially established in the rulebook for the college football season?",
+      "options": [
+        "1869",
+        "1873",
+        "1876",
+        "1880"
+      ],
+      "answer": "1876",
+      "difficulty": "medium",
+      "explanation": "The article states: 'The term 'football' was officially established in the rulebook for the 1876 college football season, when the sport first shifted from soccer-style rules to rugby-style rules.'"
+    },
+    {
+      "question": "What was the primary reason Harvard abstained from the October 19, 1873, conference held by Yale, Columbia, Princeton, and Rutgers to create standard rules?",
+      "options": [
+        "Harvard was not invited to the conference.",
+        "Harvard favored a rugby-style game that allowed running with the ball.",
+        "Harvard believed the rules should remain based strictly on soccer.",
+        "Harvard was developing its own unique set of rules independently."
+      ],
+      "answer": "Harvard favored a rugby-style game that allowed running with the ball.",
+      "difficulty": "hard",
+      "explanation": "The text notes: 'Harvard abstained from the conference, as they favored a rugby-style game that allowed running with the ball.'"
+    }
+  ],
+  "related_topics": [
+    "Canadian football",
+    "Rugby union",
+    "Soccer",
+    "Flag football"
+  ]
+}

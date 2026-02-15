@@ -1,66 +1,208 @@
-# 🧠 AI Wiki Quiz Generator
+AI Wiki Quiz Generator
 
-An AI-powered quiz generation system that converts any Wikipedia article into a structured quiz.
+An end-to-end full stack application that generates structured quizzes automatically from Wikipedia articles using Large Language Models (LLMs).
 
-## 🚀 Tech Stack
+Built as part of the DeepKlarity Full Stack Developer Assignment.
 
-- Backend: FastAPI (Python)
-- Database: PostgreSQL + SQLAlchemy
-- Scraping: BeautifulSoup
-- Validation: Custom URL validation
-- Caching: Database-level URL caching
-- (Phase 2) LLM: LangChain + Gemini
+🧠 Problem Statement
 
----
+Users provide a Wikipedia article URL.
+The system:
 
-## ✅ Phase 1 Features (Completed)
+Scrapes article content
 
-- FastAPI backend running
-- PostgreSQL connected
-- Auto-generated database tables
-- Wikipedia URL validation
-- HTML scraping using BeautifulSoup
-- Text cleaning and preprocessing
-- Data persistence in PostgreSQL
-- Caching logic (prevents duplicate scraping)
+Cleans and processes text
 
----
+Uses an LLM to generate:
 
-## 📌 API Endpoints
+5–10 MCQ questions
 
-### `POST /generate`
-Generates or fetches cached quiz data for a Wikipedia URL.
+4 options each
 
-### `GET /test-db`
-Tests database connectivity.
+Correct answer
 
-### `GET /scrape`
-Scrapes Wikipedia content (development testing endpoint).
+Explanation
 
----
+Difficulty level
 
-## 🏗 Architecture Layers
+Related topics
 
-1. Infrastructure Layer (FastAPI setup)
-2. Persistence Layer (SQLAlchemy models + DB)
-3. Extraction Layer (Scraper)
-4. Validation Layer (Strict Wikipedia-only URLs)
-5. Business Logic Layer (Caching + DB save)
+Stores everything in PostgreSQL
 
----
+Displays quizzes via React frontend
 
-## 🔜 Upcoming (Phase 2)
+Maintains history of generated quizzes
 
-- LangChain + Gemini integration
-- Quiz question generation (5–10 MCQs)
-- Related topics generation
-- Strict JSON enforcement
-- Question table persistence
-- History endpoint
-- Frontend UI
+🏗️ Tech Stack
+Backend
 
----
+FastAPI
 
-## 👨‍💻 Author
+SQLAlchemy ORM
 
-Built as part of DeepKlarity AI Wiki Quiz Generator assignment.
+PostgreSQL
+
+BeautifulSoup (HTML scraping)
+
+LangChain
+
+Google Gemini API
+
+Pydantic
+
+Uvicorn
+
+Frontend
+
+React (Vite)
+
+TypeScript
+
+Axios
+
+TailwindCSS
+
+Deployment
+
+Backend: Render
+
+Frontend: Vercel
+
+⚙️ System Architecture
+
+User → React Frontend → FastAPI Backend →
+Scraper → Text Cleaner → LLM (Gemini via LangChain) →
+PostgreSQL Storage → JSON Response → UI Rendering
+
+📌 Features
+TAB 1 – Generate Quiz
+
+URL validation
+
+Wikipedia scraping
+
+Text cleaning (citation removal, truncation)
+
+Quiz generation via LLM
+
+Structured quiz display
+
+Related topic suggestions
+
+Take Quiz mode (interactive attempt)
+
+Score calculation
+
+TAB 2 – History
+
+Stores all processed URLs
+
+Prevents duplicate scraping
+
+Modal preview of previous quizzes
+
+Reattempt functionality
+
+🧠 Prompt Engineering Strategy
+
+The LLM is instructed to:
+
+Generate strictly structured JSON
+
+Base questions only on provided article text
+
+Include difficulty classification
+
+Avoid hallucinations
+
+Provide concise explanations
+
+Output is validated before storing in DB.
+
+🗄️ Database Design
+Quiz Table
+
+id
+
+url
+
+title
+
+summary
+
+cleaned_text
+
+raw_html
+
+created_at
+
+Question Table
+
+id
+
+quiz_id (FK)
+
+question_text
+
+options (JSON)
+
+correct_answer
+
+difficulty
+
+explanation
+
+RelatedTopic Table
+
+id
+
+quiz_id (FK)
+
+topic_name
+
+🛡️ Error Handling
+
+Invalid URL → 400
+
+Scraping failure → 500
+
+LLM invalid output → 500
+
+DB connection failure → handled
+
+Duplicate quiz requests → reuse stored data
+
+📦 API Endpoints
+
+GET /
+GET /test-db
+GET /validate
+GET /scrape
+POST /generate
+GET /history
+GET /quiz/{id}
+
+🧪 Sample Data
+
+Sample generated outputs are available in:
+
+sample_data/
+
+🖥️ Running Locally
+Backend
+cd backend
+python -m venv env
+env\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --reload
+
+Frontend
+cd frontend
+npm install
+npm run dev
+
+🌍 Deployment Links
+
+Backend: https://wiki-quiz-ai.onrender.com
+
+Frontend: https://your-vercel-link
