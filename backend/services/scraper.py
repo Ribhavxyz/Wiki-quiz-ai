@@ -7,8 +7,9 @@ from utils.text_cleaner import clean_wikipedia_text
 def scrape_wikipedia(url: str):
     try:
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            "User-Agent": "Mozilla/5.0"
         }
+
         response = requests.get(url, headers=headers, timeout=10)
 
         if response.status_code != 200:
@@ -17,29 +18,34 @@ def scrape_wikipedia(url: str):
         raw_html = response.text
         soup = BeautifulSoup(raw_html, "html.parser")
 
-        # Extract title
+        # 🔹 Extract title
         title_tag = soup.find("h1")
         title = title_tag.text.strip() if title_tag else "No title found"
 
-        # Extract summary (first paragraph)
+        # 🔹 Extract paragraphs
         paragraphs = soup.find_all("p")
+
+        # 🔹 Extract summary (first meaningful paragraph)
         summary = ""
         for p in paragraphs:
             if p.text.strip():
-                summary = p.text.strip()
+                summary = clean_wikipedia_text(p.text.strip(), max_length=1000)
                 break
 
-        # Extract section headings
+        # 🔹 Extract section headings
         headings = []
         for h2 in soup.find_all("h2"):
             heading_text = h2.text.replace("[edit]", "").strip()
             if heading_text:
                 headings.append(heading_text)
 
-        # Extract cleaned text (all paragraphs)
-        full_text = "\n".join([p.text.strip() for p in paragraphs if p.text.strip()])
+        # 🔹 Extract full cleaned text for LLM
+        full_text = "\n".join(
+            [p.text.strip() for p in paragraphs if p.text.strip()]
+        )
 
         cleaned_text = clean_wikipedia_text(full_text)
+
         return {
             "title": title,
             "summary": summary,
