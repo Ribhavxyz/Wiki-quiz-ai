@@ -51,28 +51,29 @@ The system:
 
 ---
 
+```markdown
 ## ⚙️ System Architecture
 
 User
-↓
+↓  
 React Frontend
-↓
+↓  
 FastAPI Backend
-↓
+↓  
 Wikipedia Scraper
-↓
+↓  
 Text Cleaning Layer
-↓
+↓  
 LLM (Gemini via LangChain)
-↓
+↓  
 PostgreSQL
-↓
+↓  
 JSON Response
-↓
+↓  
 UI Rendering
-
-
 ---
+
+
 
 ## 📌 Features
 
@@ -175,13 +176,15 @@ env\Scripts\activate
 pip install -r requirements.txt
 uvicorn main:app --reload
 
-```markdown
+```
 
 ### Frontend
 
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
 ---
 
