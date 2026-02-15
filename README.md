@@ -197,7 +197,7 @@ sample_data/
 ![Preview](Screenshots/History%20Tab/Preview%20.png)
 
 #### Reattempt Flow
-![Reattempt](Screenshots/History%20Tab/Reattempt%20.png)
+![Reattempt](Screenshots/History%20Tab/Reattempt.png)
 
 ---
 
