@@ -51,9 +51,10 @@ The system:
 
 ---
 
-```markdown
+
 ## ⚙️ System Architecture
 
+```markdown
 User
 ↓  
 React Frontend
@@ -71,7 +72,9 @@ PostgreSQL
 JSON Response
 ↓  
 UI Rendering
+```
 ---
+
 
 
 
