@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  ArcElement,
   BarElement,
   CategoryScale,
   Chart as ChartJS,
@@ -8,24 +7,41 @@ import {
   LinearScale,
   Tooltip,
 } from "chart.js";
-import { Bar, Pie } from "react-chartjs-2";
-import { getAttempts } from "../utils/attemptStorage";
+import { Bar } from "react-chartjs-2";
+import { fetchAnalytics } from "../api/analytics";
+import type { AnalyticsResponse } from "../types/analytics";
+import { useAttempts } from "../hooks/useAttempts";
 
-const PIE_COLORS = ["#22c55e", "#f59e0b", "#ef4444", "#3b82f6", "#a855f7"];
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 export default function Dashboard() {
   const [tab, setTab] = useState<"analytics" | "attempts">("analytics");
-  const attempts = getAttempts();
+  const [analytics, setAnalytics] = useState<AnalyticsResponse>({
+    totalAttempts: 0,
+    averageScore: 0,
+    byQuiz: [],
+  });
+  const [loading, setLoading] = useState(true);
+  const [analyticsError, setAnalyticsError] = useState<string | null>(null);
+  const { records, pendingCount, syncError, syncing, retryPending } = useAttempts();
 
-  const analytics = useMemo(() => {
-    const totalQuizzesTaken = attempts.length;
-    const averageScore =
-      totalQuizzesTaken === 0
-        ? 0
-        : attempts.reduce((sum, attempt) => sum + attempt.percentage, 0) / totalQuizzesTaken;
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        setAnalyticsError(null);
+        const data = await fetchAnalytics();
+        setAnalytics(data);
+      } catch {
+        setAnalyticsError("Failed to load analytics.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    void load();
+  }, []);
 
+  const distribution = useMemo(() => {
     const buckets = [
       { range: "0-20", count: 0 },
       { range: "21-40", count: 0 },
@@ -34,29 +50,16 @@ export default function Dashboard() {
       { range: "81-100", count: 0 },
     ];
 
-    const quizCounts = new Map<string, number>();
-    for (const attempt of attempts) {
-      if (attempt.percentage <= 20) buckets[0].count += 1;
-      else if (attempt.percentage <= 40) buckets[1].count += 1;
-      else if (attempt.percentage <= 60) buckets[2].count += 1;
-      else if (attempt.percentage <= 80) buckets[3].count += 1;
-      else buckets[4].count += 1;
-
-      quizCounts.set(attempt.title, (quizCounts.get(attempt.title) ?? 0) + 1);
+    for (const quiz of analytics.byQuiz) {
+      if (quiz.avgScore <= 20) buckets[0].count += quiz.attempts;
+      else if (quiz.avgScore <= 40) buckets[1].count += quiz.attempts;
+      else if (quiz.avgScore <= 60) buckets[2].count += quiz.attempts;
+      else if (quiz.avgScore <= 80) buckets[3].count += quiz.attempts;
+      else buckets[4].count += quiz.attempts;
     }
 
-    const topQuizzes = [...quizCounts.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-      .map(([title, attemptsCount]) => ({ title, attempts: attemptsCount }));
-
-    return {
-      totalQuizzesTaken,
-      averageScore,
-      distribution: buckets,
-      topQuizzes,
-    };
-  }, [attempts]);
+    return buckets;
+  }, [analytics.byQuiz]);
 
   return (
     <div className="space-y-8">
@@ -93,34 +96,32 @@ export default function Dashboard() {
       {tab === "analytics" && (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-6 shadow-xl">
-            <p className="text-sm text-slate-400">Total Quizzes Taken</p>
-            <p className="mt-3 text-4xl font-semibold text-white">{analytics.totalQuizzesTaken}</p>
+            <p className="text-sm text-slate-400">Total Attempts</p>
+            <p className="mt-3 text-4xl font-semibold text-white">{analytics.totalAttempts}</p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-6 shadow-xl">
             <p className="text-sm text-slate-400">Average Score</p>
             <p className="mt-3 text-4xl font-semibold text-emerald-300">
-              {analytics.averageScore.toFixed(1)}%
+              {analytics.averageScore.toFixed(2)}%
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-6 shadow-xl">
-            <p className="text-sm text-slate-400">Top Quiz Attempts</p>
-            <p className="mt-3 text-4xl font-semibold text-cyan-300">
-              {analytics.topQuizzes[0]?.attempts ?? 0}
-            </p>
+            <p className="text-sm text-slate-400">Pending Sync</p>
+            <p className="mt-3 text-4xl font-semibold text-cyan-300">{pendingCount}</p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-6 shadow-xl lg:col-span-2">
-            <h3 className="mb-4 text-lg font-semibold text-white">Score Distribution</h3>
+            <h3 className="mb-4 text-lg font-semibold text-white">Attempts by Score Bucket</h3>
             <div className="h-72 w-full">
               <Bar
                 data={{
-                  labels: analytics.distribution.map((item) => item.range),
+                  labels: distribution.map((item) => item.range),
                   datasets: [
                     {
                       label: "Attempts",
-                      data: analytics.distribution.map((item) => item.count),
+                      data: distribution.map((item) => item.count),
                       backgroundColor: "#3b82f6",
                       borderRadius: 8,
                     },
@@ -129,95 +130,73 @@ export default function Dashboard() {
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
-                  plugins: {
-                    legend: {
-                      labels: {
-                        color: "#e2e8f0",
-                      },
-                    },
-                  },
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: "#cbd5e1",
-                      },
-                      grid: {
-                        color: "#1e293b",
-                      },
-                    },
-                    y: {
-                      ticks: {
-                        color: "#cbd5e1",
-                      },
-                      grid: {
-                        color: "#1e293b",
-                      },
-                    },
-                  },
                 }}
               />
             </div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-6 shadow-xl">
-            <h3 className="mb-4 text-lg font-semibold text-white">Top 5 Most Attempted</h3>
-            {analytics.topQuizzes.length === 0 ? (
-              <p className="text-sm text-slate-400">No attempts yet.</p>
-            ) : (
-              <div className="h-72 w-full">
-                <Pie
-                  data={{
-                    labels: analytics.topQuizzes.map((item) => item.title),
-                    datasets: [
-                      {
-                        data: analytics.topQuizzes.map((item) => item.attempts),
-                        backgroundColor: analytics.topQuizzes.map(
-                          (_, index) => PIE_COLORS[index % PIE_COLORS.length],
-                        ),
-                        borderColor: "#0f172a",
-                        borderWidth: 2,
-                      },
-                    ],
-                  }}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: {
-                        labels: {
-                          color: "#e2e8f0",
-                        },
-                      },
+            <h3 className="mb-4 text-lg font-semibold text-white">Average Score by Quiz</h3>
+            <div className="h-72 w-full">
+              <Bar
+                data={{
+                  labels: analytics.byQuiz.map((item) => item.title),
+                  datasets: [
+                    {
+                      label: "Avg Score",
+                      data: analytics.byQuiz.map((item) => item.avgScore),
+                      backgroundColor: "#22c55e",
+                      borderRadius: 8,
                     },
-                  }}
-                />
-              </div>
-            )}
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                }}
+              />
+            </div>
           </div>
+
+          {(analyticsError || syncError || loading) && (
+            <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-6 shadow-xl lg:col-span-3">
+              {loading && <p className="text-sm text-slate-300">Loading analytics...</p>}
+              {analyticsError && <p className="text-sm text-red-300">{analyticsError}</p>}
+              {syncError && <p className="text-sm text-amber-300">{syncError}</p>}
+              <button
+                type="button"
+                onClick={() => void retryPending()}
+                disabled={syncing || pendingCount === 0}
+                className="mt-3 rounded-lg bg-blue-600 px-4 py-2 text-sm text-white disabled:opacity-60"
+              >
+                {syncing ? "Retrying..." : "Retry Pending Sync"}
+              </button>
+            </div>
+          )}
         </div>
       )}
 
       {tab === "attempts" && (
         <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-6 shadow-xl">
           <h3 className="mb-4 text-xl font-semibold text-white">My Attempts</h3>
-          {attempts.length === 0 ? (
+          {records.length === 0 ? (
             <p className="text-sm text-slate-400">No attempts recorded yet.</p>
           ) : (
             <div className="space-y-3">
-              {attempts.map((attempt) => (
+              {records.map((attempt) => (
                 <div
-                  key={attempt.id}
+                  key={attempt.local_id}
                   className="rounded-xl border border-white/10 bg-white/5 px-4 py-3"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <p className="font-medium text-white">{attempt.title}</p>
-                      <p className="text-xs text-slate-400">
-                        {new Date(attempt.attemptedAt).toLocaleString()}
-                      </p>
-                    </div>
+                    <p className="text-xs text-slate-400">
+                      {new Date(attempt.created_at).toLocaleString()}
+                    </p>
                     <div className="rounded-full bg-blue-600/20 px-3 py-1 text-sm text-blue-300">
-                      {attempt.score}/{attempt.total} ({attempt.percentage.toFixed(1)}%)
+                      Quiz #{attempt.quiz_id} • {attempt.score}/{attempt.total}
+                    </div>
+                    <div className={`text-xs ${attempt.synced ? "text-emerald-300" : "text-amber-300"}`}>
+                      {attempt.synced ? "Synced" : "Pending"}
                     </div>
                   </div>
                 </div>

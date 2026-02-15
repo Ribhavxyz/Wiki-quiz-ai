@@ -28,6 +28,12 @@ class Quiz(Base):
         cascade="all, delete-orphan"
     )
 
+    attempts = relationship(
+        "Attempt",
+        back_populates="quiz",
+        cascade="all, delete-orphan"
+    )
+
 
 class Question(Base):
     __tablename__ = "questions"
@@ -66,3 +72,15 @@ class RelatedTopic(Base):
 
     # Relationship back to Quiz
     quiz = relationship("Quiz", back_populates="related_topics")
+
+
+class Attempt(Base):
+    __tablename__ = "attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    quiz_id = Column(Integer, ForeignKey("quizzes.id", ondelete="CASCADE"), nullable=False, index=True)
+    score = Column(Integer, nullable=False)
+    total = Column(Integer, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    quiz = relationship("Quiz", back_populates="attempts")

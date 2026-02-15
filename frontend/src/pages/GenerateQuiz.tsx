@@ -3,8 +3,9 @@ import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import api from "../api/axios";
 import type { QuizData } from "../types/quiz";
-import { getDifficultyBreakdown, saveAttempt } from "../utils/attemptStorage";
 import { normalizeQuizData, parseAndValidateQuizPayload } from "../utils/quizValidation";
+import { useAttempts } from "../hooks/useAttempts";
+import { fetchTopicSummary } from "../api/topicSummary";
 
 type QuizMode = "preview" | "attempt" | "result";
 type DifficultyFilter = "all" | "easy" | "medium" | "hard";
@@ -15,7 +16,6 @@ export default function GenerateQuiz() {
   const [strictOutput, setStrictOutput] = useState(false);
   const [quizData, setQuizData] = useState<QuizData | null>(null);
   const [generationError, setGenerationError] = useState<string | null>(null);
-  const [attemptSyncError, setAttemptSyncError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<QuizMode>("preview");
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
@@ -28,6 +28,7 @@ export default function GenerateQuiz() {
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
   const [topicSummary, setTopicSummary] = useState("");
   const [isTopicModalVisible, setIsTopicModalVisible] = useState(false);
+  const { addAttempt, syncError: attemptSyncError } = useAttempts();
 
   const difficultyCounts = useMemo(
     () =>
@@ -64,7 +65,6 @@ export default function GenerateQuiz() {
     setScore(0);
     setShowFeedback(false);
     setFeedbackResult(null);
-    setAttemptSyncError(null);
   };
 
   useEffect(() => {
@@ -117,9 +117,9 @@ export default function GenerateQuiz() {
     requestAnimationFrame(() => setIsTopicModalVisible(true));
 
     try {
-      const res = await api.get(`/topic-summary?topic=${encodeURIComponent(topic)}`);
-      setTopicSummary(res?.data?.summary || "No summary available yet for this topic.");
-    } catch (error) {
+      const res = await fetchTopicSummary(topic);
+      setTopicSummary(res.summary || "No summary available yet for this topic.");
+    } catch {
       setTopicSummary("Summary unavailable right now. Please try again.");
     }
   };
@@ -158,35 +158,13 @@ export default function GenerateQuiz() {
     }
   };
 
-  const persistAttemptResult = async (finalScore: number, finalAnswers: string[]) => {
-    if (!quizData || activeQuestions.length === 0) return;
-    const total = activeQuestions.length;
-    const percentage = total > 0 ? (finalScore / total) * 100 : 0;
-
-    const record = saveAttempt({
-      quizId: quizData.id ?? quizData.url ?? quizData.title,
-      title: quizData.title,
+  const persistAttemptResult = async (finalScore: number, _finalAnswers: string[]) => {
+    if (!quizData?.id || activeQuestions.length === 0) return;
+    await addAttempt({
+      quiz_id: quizData.id,
       score: finalScore,
-      total,
-      percentage,
-      difficultyBreakdown: getDifficultyBreakdown(activeQuestions),
-      answers: finalAnswers,
+      total: activeQuestions.length,
     });
-
-    try {
-      await api.post("/attempts", {
-        quiz_id: quizData.id,
-        title: record.title,
-        score: record.score,
-        total: record.total,
-        percentage: record.percentage,
-        attempted_at: record.attemptedAt,
-        difficulty_breakdown: record.difficultyBreakdown,
-      });
-      setAttemptSyncError(null);
-    } catch {
-      setAttemptSyncError("Saved locally. Backend sync failed.");
-    }
   };
 
   return (

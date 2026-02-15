@@ -54,13 +54,18 @@ def clean_json_response(raw_text: str) -> str:
     return re.sub(r"```json|```", "", raw_text).strip()
 
 
-def generate_quiz_from_text(article_text: str):
+def generate_quiz_from_text(article_text: str, strict_output: bool = False):
     llm_service = LLMService()
 
     with open("prompts/quiz_prompt.txt", "r", encoding="utf-8") as f:
         template = f.read()
 
     prompt = template.replace("{article_text}", article_text)
+    if strict_output:
+        prompt += (
+            "\n\nOutput requirements: respond with strict JSON only, with keys quiz and related_topics, "
+            "no markdown wrappers, no trailing text, and exactly 4 options per question."
+        )
 
     raw_response = llm_service.generate(prompt)
     cleaned = clean_json_response(raw_response)
