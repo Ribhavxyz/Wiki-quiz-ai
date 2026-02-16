@@ -202,13 +202,14 @@ def get_history(db: Session = Depends(get_db)):
 
 
 @app.get("/quiz/{quiz_id}", response_model=QuizDetailResponse)
-def get_quiz(quiz_id: int, db: Session = Depends(get_db)):
+def get_quiz_detail(quiz_id: int, db: Session = Depends(get_db)):
     quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
 
     if not quiz:
         raise HTTPException(status_code=404, detail="Quiz not found")
 
-    return quiz
+    return build_response(quiz)
+
 
 
 @app.post("/attempts", response_model=AttemptResponse)
