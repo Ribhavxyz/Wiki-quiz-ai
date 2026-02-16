@@ -6,6 +6,8 @@ from utils.validators import validate_wikipedia_url
 from services.scraper import scrape_wikipedia
 from database import engine, get_db
 import models
+from fastapi.middleware.cors import CORSMiddleware
+
 from models import Base, Quiz, Question, RelatedTopic, Attempt
 from schemas import (
     QuizHistoryResponse,

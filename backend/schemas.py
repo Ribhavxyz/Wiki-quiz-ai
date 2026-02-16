@@ -57,11 +57,12 @@ class QuizDetailResponse(BaseModel):
     url: str
     title: str
     summary: str
-    cleaned_text: str
-    created_at: datetime
+    quiz: List[QuestionResponse]
+    related_topics: List[str]
 
     class Config:
         from_attributes = True
+
 
 
 class QuizGenerateRequest(BaseModel):
