@@ -227,7 +227,7 @@ npm run dev
 
 - Backend: https://wiki-quiz-ai.onrender.com
 
-- Frontend: https://wiki-quiz-ai-ry3.vercel.app/
+- Frontend: https://wiki-quiz-ai-ry3.vercel.app?_vercel_share=gKf2hA2rUachg8lmkFDFEvnchtYs75ar:
 
 ---
 
